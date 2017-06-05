@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BukuSaya.com</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="../style/css/main.css">
+  </head>
+  <body>
+    <div id="index">
+      <div style="position:fixed;top:0px;width:100%;z-index:999;max-height:300px">
+        <header class="row">
+          <div class="col s2">BukuKita.com</div>
+          <ul class="col s3">
+            <li> <i class="material-icons">phone</i> {{contact.phone}} </li>
+            <li>{{contact.address}}</li>
+            <li>{{contact.opr}}</li>
+            <li><a :href="contact.mailto" target="_top">{{contact.email}}</a></li>
+          </ul>
+          <div class="col s4 offset-s3 center-align">
+            <span id="afterlogin">
+              <i class="material-icons">assignment_ind</i>
+              <a v-on:click="logout">Logout</a>
+            </span>
+            <span id="beforelogin"> <a href="#modalLogin"> Login</a> <a href="#modalRegister"> Register</a></span>
+            <!-- <i class="material-icons">shopping_basket</i> -->
+          </div>
+        </header>
+        <nav class="row">
+          <div class="col" v-for="menu in menus"><a :href="menu.url" class="menu">{{menu.name}}</a></div>
+        </nav>
+      </div>
+      <!-- Modal Trigger -->
+      <div id="modalLogin" class="modal" v-on:submit.prevent="login()">
+        <form id="frmLogin">
+          <div class="modal-content">
+            <h4>Login</h4>
+            <input type="email" id="txtEmail" placeholder="email" required/>
+            <input type="password" id="txtPassword" placeholder="password"required>
+          </div>
+          <div class="modal-footer">
+            <label class="red-text" id="errLogin"></label>
+            <input type="submit" class="modal-action waves-effect waves-green btn-flat" value="LOGIN">
+          </div>
+      </form>
+      </div>
+      <div id="modalRegister" class="modal" v-on:submit.prevent="register()">
+        <form>
+          <div class="modal-content">
+            <h4>Register</h4>
+            <input type="email" id="txtREmail" placeholder="email" required/>
+            <input type="text" id="txtRUsername" placeholder="username" required/>
+            <input type="password" id="txtRPassword" placeholder="password"required>
+          </div>
+          <div class="modal-footer">
+            <label class="red-text" id="errRegister"></label>
+            <input type="submit" class="modal-action waves-effect waves-green btn-flat" value="REGISTER">
+          </div>
+      </form>
+      </div>
+      <div style="height:300px"></div>
+      <div class="row">
+        <div class="col s9">
+          <div class="container">
+            <section id="product" class="row">
+                <div class="card col s12 m5 l5" v-for="book in booklist"  style="margin-top:1vw">
+                  <div class="card-image waves-effect waves-block waves-light " :style="{ backgroundImage: 'url(' + book.img + ')' }">
+                  </div>
+                  <div class="card-content" style="padding:0px">
+                    <span class="card-title activator grey-text text-darken-4" style="font-size:1em;line-height:1.1em;">{{book.title}}<i class="material-icons right">more_vert</i></span>
+                    <p><i class="material-icons green small" v-on:click="addToCart(book._id)" alt="cart" v-if="book.stock>0">shopping_cart</i></p>
+                  </div>
+                  <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4" style="font-size:1em;line-height:1.1em;">{{book.title}}<i class="material-icons right">close</i></span>
+                    <br/>
+                    <div class="divider"></div>
+                    <br/>
+                    <p>
+                      ISBN {{book.isbn}} <br/>
+                      <strong>{{book.author}} </strong><br/>
+                      {{book.price}} <br/>
+                      stock: {{book.stock}} <br/>
+                      <div class="chip">{{book.category}}</div>
+                    </p>
+                  </div>
+                </div>
+              </section>
+            <article></article>
+            <!-- <footer></footer> -->
+          </div>
+        </div>
+        <div class="col s3">
+          <aside id="cart">
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="2">Product</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th colspan="2">SubTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="cart in cartlist">
+                  <td><img :src="cart.img" style="width:50px;height:50px"></td>
+                  <td> {{cart.title}}</td>
+                  <td><input :id ="cart._id" type="number" :value="cart.qty" v-on:keyup="updateCart(cart._id)" min=1 :max="cart.stock"></td>
+                  <td>{{cart.price}}</td>
+                  <td>{{cart.subtotal}}</td>
+                  <td><i class="material-icons" v-on:click="deleteCart(cart._id)" >close</i></td>
+                </tr>
+              </tbody>
+              <tfoot style="margin-top:30px">
+                <tr>
+                  <td colspan="4">Total</td>
+                  <td id="totalprice"></td>
+                </tr>
+                <tr style="padding-right:15px;padding-bottom:35px">
+                  <td colspan="3"></td>
+                  <td colspan="2" class="right-align"><button class="btn" disabled id="btnCheckout" v-on:click="checkout()">CHECKOUT</button><br/><br/></td>
+                </tr>
+              </tfoot>
+            </table>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@2.3.3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <style>
+      .card-image{
+        background-size:cover;
+      }
+    </style>
+  </body>
+  <script type="text/javascript">
+    const index = new Vue ({
+      el: '#index',
+      data: {
+        contact : {
+          phone : '+6285813372700',
+          address: 'taman alfa indah blok xx no xx',
+          opr: 'senin - jumat (09:00 - 18:00)',
+          email:'cs@bukukita.com',
+          mailto:'mailto:cs@bukukita.com?Subject=Contact%20Us'
+        },
+        // token: localStorage.getItem('token') || null,
+        menus : [
+          {
+            url : '/contactus',
+            name: 'contact us'
+          },
+          {
+            url : '/faq',
+            name: 'FAQ'
+          }
+        ],
+        booklist : [],
+        cartlist : [],
+        totalPrice: 0
+      },
+      created: function() {
+        this.getBooklist();
+        this.setMenu(false);
+      },
+      methods: {
+        setMenu: function(login) {
+          if (login) {
+            $('#afterlogin').show();
+            $('#beforelogin').hide();
+          } else {
+            $('#afterlogin').hide();
+            $('#beforelogin').show();
+          }
+        },
+        logout: function(){
+
+          // this.token = null;
+          console.log('rm');
+          localStorage.removeItem('token');
+          this.setMenu(false);
+
+        },
+        login: function(){
+          let _self = this;
+          console.log('eh true');
+          axios.post('http://localhost:3000/login',{
+            email : $('#txtEmail').val(),
+            password: $('#txtPassword').val()
+          })
+          .then(function (response) {
+            console.log(response.data.err)
+            console.log(response.data === false)
+            if (response.data.hasOwnProperty('err')) $('#errLogin').text(response.data.err);
+            else if (response.data === false) $('#errLogin').text('Invalid user');
+            else {
+              console.log('set data');
+              localStorage.setItem('token',response.data);
+              // setInterval(3000);
+              // _self.token = response.data;
+              _self.setMenu(true)
+              $('#errLogin').text('');
+              $('#modalLogin').modal('close');
+
+              // console.log(response.data)
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          return false;
+        },
+        register: function(){
+          console.log('eh true');
+          axios.post('http://localhost:3000/register',{
+            email : $('#txtREmail').val(),
+            password: $('#txtRPassword').val(),
+            username: $('#txtRUsername').val()
+          })
+          .then(function (response) {
+            console.log(response.data.err)
+            if (response.data.hasOwnProperty('err')) $('#errRegister').text(response.data.err);
+            else {
+              // localStorage.setItem('token',response.data);
+              // this.token = localStorage.getItem('token');
+              // $('#errLogin').text('');
+              $('#modalRegister').modal('close');
+              $('#modalLogin').modal('open');
+              $('#errLogin').text('Success to register, please login here');
+              // console.log(response.data)
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          return false;
+        },
+        getBooklist: function(){
+          let _self = this
+          axios.get('http://localhost:3000/books')
+          .then(function (response) {
+            _self.booklist = response.data;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        },
+        addToCart: function(bookid) {
+          let idx = this.cartlist.findIndex((item)=> item._id === bookid );
+          if (idx === -1) {
+            let bidx = this.booklist.findIndex((item)=> item._id === bookid );
+            let cart = {
+              _id: this.booklist[bidx]._id,
+              title: this.booklist[bidx].title,
+              price: this.booklist[bidx].price,
+              img: this.booklist[bidx].img,
+              subtotal:this.booklist[bidx].price,
+              stock: this.booklist[bidx].stock,
+              qty:1
+            }
+            this.cartlist.push(cart);
+          } else {
+            this.cartlist[idx].qty +=1;
+            this.cartlist[idx].subtotal = this.cartlist[idx].price * this.cartlist[idx].qty;
+          }
+          this.getTotalPrice();
+        },
+        checkout: function() {
+          if (this.cartlist.length === 0) {
+            alert('Your cart is empty');
+          } else if (localStorage.getItem('token') === null) {
+            alert('Please login before checkout');
+          } else {
+            //cek transaksi
+            let _self = this;
+            let itemsID = this.cartlist.map((item)=>item._id);
+            axios.post('http://localhost:3000/books/stock',{itemsID})
+            .then((result)=> {
+              let items = result.data;
+              let err = '';
+              items.forEach((item,idx)=>{
+                if (item.stock < this.cartlist[idx].qty) err += `- ${item.title} tidak mencukupi, stock hanya tersedia ${item.stock}\n`;
+              });
+              if (err!=='') alert(err);
+              else {
+                let itemList = _self.cartlist.map((cart) => {
+                  return {
+                    item: cart._id,
+                    qty: cart.qty,
+                    grandTotal: cart.price * cart.qty
+                  }
+                })
+                let cart = {
+                  "memberid": localStorage.getItem('token'),
+                  "total": parseInt($('#totalprice').text()),
+                  "bookList": itemList
+                };
+                axios.post('http://localhost:3000/transactions/',cart)
+                .then((result)=> {
+                  if (result.data.hasOwnProperty('err')) {
+                    alert(result.data.err);
+                  } else {
+                    _self.cartlist = [];
+                    $('#totalprice').text('');
+                    $('#btnCheckout').prop('disabled',true);
+                    this.getBooklist();
+                    alert('Transaksi berhasil')
+                  }
+
+                }).catch((err)=>{console.log(err)})
+              }
+            }).catch((err)=> console.log(err));
+          }
+        },
+        updateCart: function(bookid) {
+          let qty = parseInt($(`#${bookid}`).val());
+          let idx = this.cartlist.findIndex((item)=> item._id === bookid);
+          if (qty > 0) {
+            this.cartlist[idx].qty = qty;
+            this.cartlist[idx].subtotal = this.cartlist[idx].price * qty;
+          }
+          this.getTotalPrice();
+        },
+        deleteCart: function(bookid) {
+          let idx = this.cartlist.findIndex((item)=> item._id === bookid);
+          if (idx !== -1) {
+            this.cartlist.splice(idx,1);
+            this.getTotalPrice();
+          }
+        },
+        getTotalPrice: function() {
+          if (this.cartlist.length === 0 ) $('#btnCheckout').prop('disabled',true);
+          else $('#btnCheckout').prop('disabled',false);
+          let totalprice = this.cartlist.reduce((sum,val)=>sum+(val.qty*val.price),0);
+          $('#totalprice').text(totalprice);
+        }
+      }
+    });
+
+    const init = () => {
+      $('.modal').modal();
+    }
+    $(init);
+  </script>
+</html>

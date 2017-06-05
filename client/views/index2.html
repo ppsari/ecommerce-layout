@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BukuSaya.com</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="../style/css/main.css">
+
+  </head>
+
+  <body>
+    <div id="index">
+      <div style="position:fixed;top:0px;width:100%;z-index:999">
+        <header class="row">
+          <div class="col s2">BukuKita.com</div>
+          <ul class="col s3">
+            <li> <i class="material-icons">phone</i> {{contact.phone}} </li>
+            <li>{{contact.address}}</li>
+            <li>{{contact.opr}}</li>
+            <li><a :href="contact.mailto" target="_top">{{contact.email}}</a></li>
+          </ul>x
+          <div class="col s2 offset-s5 center-align">
+            <i class="material-icons">assignment_ind</i>
+            <i class="material-icons">shopping_basket</i>
+          </div>
+        </header>
+        <nav class="row">
+          <div class="col" v-for="menu in menus"><a :href="menu.url" class="menu">{{menu.name}}</a></div>
+        </nav>
+      </div>
+
+      <div class="container">
+        <div style="height:250px">
+        </div>
+        <aside></aside>
+        <section>
+          <div  id="product" class="row">
+              <div class="">
+                <div class="col s12 m4  blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">Card Title</span>
+                    <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">This is a link</a>
+                    <a href="#">This is a link</a>
+                  </div>
+                </div>
+                <div class="col s12 m4  blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">Card Title</span>
+                    <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">This is a link</a>
+                    <a href="#">This is a link</a>
+                  </div>
+                </div>
+                <div class="col s12 m4  blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">Card Title</span>
+                    <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">This is a link</a>
+                    <a href="#">This is a link</a>
+                  </div>
+                </div>
+              <!-- </div> -->
+            <!-- <div class="card" style="margin-left:1vw;margin-top:1vw">
+              <div class="card-image waves-effect waves-block waves-light " :style="{ backgroundImage: 'url(' + book.img + ')' }">
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4" style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">more_vert</i></span>
+                <p><a href="#" class="btn btn-small">Add To Cart</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4"  style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">close</i></span>
+                <br/>
+                <div class="divider"></div>
+                <br/>
+                <p>
+                  ISBN {{book.isbn}} <br/>
+                  <strong>{{book.author}} </strong><br/>
+                  {{book.price}} <br/>
+                  <div class="chip">{{book.category}}</div>
+                </p>
+              </div>
+            </div>
+            <div class="card" style="margin-left:1vw;margin-top:1vw">
+              <div class="card-image waves-effect waves-block waves-light " :style="{ backgroundImage: 'url(' + book.img + ')' }">
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4" style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">more_vert</i></span>
+                <p><a href="#" class="btn btn-small">Add To Cart</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4"  style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">close</i></span>
+                <br/>
+                <div class="divider"></div>
+                <br/>
+                <p>
+                  ISBN {{book.isbn}} <br/>
+                  <strong>{{book.author}} </strong><br/>
+                  {{book.price}} <br/>
+                  <div class="chip">{{book.category}}</div>
+                </p>
+              </div>
+            </div>
+            <div class="card" style="margin-left:1vw;margin-top:1vw">
+              <div class="card-image waves-effect waves-block waves-light " :style="{ backgroundImage: 'url(' + book.img + ')' }">
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4" style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">more_vert</i></span>
+                <p><a href="#" class="btn btn-small">Add To Cart</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4"  style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">close</i></span>
+                <br/>
+                <div class="divider"></div>
+                <br/>
+                <p>
+                  ISBN {{book.isbn}} <br/>
+                  <strong>{{book.author}} </strong><br/>
+                  {{book.price}} <br/>
+                  <div class="chip">{{book.category}}</div>
+                </p>
+              </div>
+            </div>
+            <div class="card" style="margin-left:1vw;margin-top:1vw">
+              <div class="card-image waves-effect waves-block waves-light " :style="{ backgroundImage: 'url(' + book.img + ')' }">
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4" style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">more_vert</i></span>
+                <p><a href="#" class="btn btn-small">Add To Cart</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4"  style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">close</i></span>
+                <br/>
+                <div class="divider"></div>
+                <br/>
+                <p>
+                  ISBN {{book.isbn}} <br/>
+                  <strong>{{book.author}} </strong><br/>
+                  {{book.price}} <br/>
+                  <div class="chip">{{book.category}}</div>
+                </p>
+              </div>
+            </div>
+            <div class="card" style="margin-left:1vw;margin-top:1vw">
+              <div class="card-image waves-effect waves-block waves-light " :style="{ backgroundImage: 'url(' + book.img + ')' }">
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4" style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">more_vert</i></span>
+                <p><a href="#" class="btn btn-small">Add To Cart</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4"  style="font-size:1.2em;line-height:1.5em">{{book.title}}<i class="material-icons right">close</i></span>
+                <br/>
+                <div class="divider"></div>
+                <br/>
+                <p>
+                  ISBN {{book.isbn}} <br/>
+                  <strong>{{book.author}} </strong><br/>
+                  {{book.price}} <br/>
+                  <div class="chip">{{book.category}}</div>
+                </p>
+              </div>
+            </div> -->
+          </div>
+        </section>
+        <article></article>
+        <footer></footer>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@2.3.3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    <style>
+      .card-image{
+        background-size:cover;
+        /*width: 200px;*/
+      }
+    </style>
+    <!-- <script src=""></script> -->
+  </body>
+  <script type="text/javascript">
+
+  </script>
+</html>

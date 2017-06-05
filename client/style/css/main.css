@@ -1,0 +1,139 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  /*background-color: red;*/
+  background-color: gray;
+}
+
+
+header a {
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(117, 117, 39);
+}
+
+h1,h2,h3,h4,h5  {
+  text-transform: uppercase;
+}
+
+header {
+  background-color: rgb(37, 36, 64);
+  color: white;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+}
+
+nav {
+  display: flex;
+  flex-flow: row wrap;
+  background-color: rgba(153, 162, 83, 0.91);
+  align-items: center;
+}
+
+#product {
+  display: flex;
+  flex-flow: row wrap;
+  background-color: rgb(64, 59, 63);
+  /*align-items: flex-start;*/
+  align-content: center;
+  justify-content: flex-start;
+  padding: 0px 5vw 0px 0px;
+  font-size:1em;
+  line-height: 1em;
+}
+
+.card{
+  /*margin: 0px 5px;*/
+  /*margin: 0px 5px 5px 0px;*/
+  margin: 0px 0px 5px 200px; !important;
+}
+.card-image {
+  height:10vw;background-size:cover;
+  position:absolute
+}
+nav a {
+  text-decoration: none;
+  color: rgb(37, 36, 64);
+  font-weight: bold;
+  text-transform: uppercase;
+  /*padding:0px;*/
+}
+
+nav, header, section {
+  /*text-transform: capitalize;*/
+  padding: 1.5vw 0px 1.5vw 1.5vw;
+  flex: 1 100%;
+}
+/*
+// Media Query Ranges
+$small-screen-up: 601px !default;
+$medium-screen-up: 993px !default;
+$large-screen-up: 1201px !default;
+$small-screen: 600px !default;
+$medium-screen: 992px !default;
+$large-screen: 1200px !default;
+
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+
+@mixin column-count($ct) {
+  -webkit-column-count: $ct;
+  -moz-column-count: $ct;
+  column-count: $ct;
+}
+
+.cards-container {
+  column-break-inside: avoid;
+  .card {
+    display: inline-block;
+    overflow: visible;
+  }
+}
+
+@media #{$small-and-down} {
+  .cards-container {
+    @include column-count(1);
+  }
+}
+@media #{$medium-and-up} {
+  .cards-container {
+    @include column-count(2);
+  }
+}
+@media #{$large-and-up} {
+  .cards-container {
+    @include column-count(3);
+  }
+}
+
+
+/// Styles for demo
+.text-center {
+  text-align: center;
+}*/
+table {
+  background-color: rgb(95, 97, 116);
+  color: rgb(247, 214, 158)
+}
+
+table:hover {
+  background-color: rgba(153, 162, 83, 0.91);
+  color: black
+}
+
+td {
+  padding: 0px 10px
+}
+/*
+tfoot tr{
+  padding-bottom: 25px;
+  margin: 30px;
+}*/
